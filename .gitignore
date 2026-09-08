@@ -1,0 +1,17 @@
+# Documento do enunciado
+*.pdf
+
+# Cache e arquivos compilados do Python
+__pycache__/
+*.py[cod]
+
+# Ambientes e ferramentas locais
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
