@@ -126,20 +126,6 @@ mesma fórmula:
 | **`k = 1`** (consulta / leitura) | só cai se **todos** caírem | `A = 1 − (1 − p)ⁿ` |
 | **`k = n`** (atualização / escrita) | precisa de **todos** ligados | `A = pⁿ` |
 
-## Conferindo se a fórmula faz sentido
-
-| Situação | O que a fórmula dá | Faz sentido? |
-|---|---|---|
-| `n = 1, k = 1` | `A = p` | sim: com 1 servidor só, o serviço vale o que vale o servidor |
-| `p = 1` (servidor nunca cai) | `A = 1` | sim |
-| `p = 0` (servidor nunca liga) | `A = 0` | sim |
-| aumentar `k` (exigir mais) | `A` diminui | sim |
-| aumentar `n` com `k` fixo | `A` aumenta | sim |
-
-> Essas verificações estão automatizadas em `analitico._autoteste()`. Ao rodar
-> `python analitico.py` o programa confere sozinho que a fórmula geral bate com os dois
-> casos extremos, para vários `n` e `p`.
-
 ---
 
 # Exercício 1.2 (parte 1): Cálculo analítico
@@ -316,7 +302,6 @@ Resumo geral:
 diferença média ........: 0,000638
 diferença máxima .......: 0,004200
 margem esperada (1/√N) .: 0,003162
-fórmula dentro do intervalo de confiança de 95%: 59 de 65 (90,8%)
 ```
 
 ## O que esses resultados mostram
@@ -339,7 +324,19 @@ Instale as dependências externas:
 python -m pip install -r requirements.txt
 ```
 
-Em seguida, gere as tabelas e os gráficos:
+Para executar somente a parte 1, de cálculo analítico:
+
+```powershell
+python analitico.py
+```
+
+Para executar somente a parte 2, de simulação:
+
+```powershell
+python simulador.py --rodadas 100000
+```
+
+Para executar as duas partes em sequência:
 
 ```powershell
 python main.py --rodadas 100000
@@ -350,17 +347,17 @@ for omitido, o programa usa 100.000 rodadas.
 
 ## Arquivos CSV gerados
 
-Os arquivos abaixo são recriados a cada execução de `main.py`.
+Os arquivos abaixo são recriados pelos comandos de cada parte.
 
-| Arquivo | Formato | Conteúdo |
+| Arquivo | Gerado por | Conteúdo |
 |---|---|---|
-| `tabela1_analitico.csv` | formato longo | Cada linha representa uma combinação de `n`, política, `k` e `p`; a coluna `A_analitico` contém a disponibilidade calculada pela fórmula. É adequado para filtrar e analisar dados com ferramentas como Pandas. |
-| `tabela1_analitico_planilha.csv` | formato de planilha | Contém os mesmos cálculos analíticos, mas cada valor de `p` é uma coluna. É mais fácil de visualizar em Excel ou LibreOffice. |
-| `tabela2_analitico_vs_simulado.csv` | comparação | Coloca o valor analítico e o simulado lado a lado. Também registra rodadas, sucessos, erros, intervalo de confiança de 95% e se o valor analítico pertence ao intervalo. |
+| `tabela1_analitico.csv` | `analitico.py` | Cada linha representa uma combinação de `n`, política, `k` e `p`; a coluna `A_analitico` contém a disponibilidade calculada pela fórmula. É adequado para filtrar e analisar dados com ferramentas como Pandas. |
+| `tabela1_analitico_planilha.csv` | `analitico.py` | Contém os mesmos cálculos analíticos, mas cada valor de `p` é uma coluna. É mais fácil de visualizar em Excel ou LibreOffice. |
+| `tabela2_analitico_vs_simulado.csv` | `simulador.py` | Coloca o valor analítico e o simulado lado a lado. Também registra rodadas, sucessos e erros. |
 
 | Arquivo | O que faz |
 |---|---|
-| `analitico.py` | a fórmula do Exercício 1.1 + testes automáticos que a conferem |
-| `simulador.py` | o simulador (versão didática e versão rápida) |
-| `main.py` | gera três tabelas CSV e sete gráficos |
+| `analitico.py` | calcula a disponibilidade e executa a parte 1 |
+| `simulador.py` | executa a parte 2 e compara fórmula com simulação |
+| `main.py` | executa as duas partes do Exercício 1.2 |
 | `resultados/` | as planilhas e os gráficos gerados |
