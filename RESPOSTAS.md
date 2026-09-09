@@ -1,6 +1,7 @@
 # Computação Distribuída: Exercícios I (1.1 e 1.2)
 
 Prof. Nabor C. Mendonça, Universidade de Fortaleza
+
 Aluno: Matheus Diógenes Amorim - 2310277
 
 ---
@@ -13,9 +14,7 @@ Você tem `n` servidores fazendo a mesma coisa (são cópias, réplicas).
 Cada um pode estar **ligado** ou **caído**.
 O serviço só funciona se pelo menos `k` deles estiverem ligados.
 
-**Pergunta: qual a chance do serviço estar funcionando agora?**
-
-Os três ingredientes:
+As três variáveis:
 
 | | O que é | Exemplo |
 |---|---|---|
@@ -51,14 +50,6 @@ interfere no outro:
 | C C C | 0 | 0,1 × 0,1 × 0,1 | **0,001** |
 
 Somando as 8 linhas dá exatamente 1,000. Isso mostra que cobrimos todos os casos possíveis.
-
-**Duas coisas importantes de reparar:**
-
-1. As três linhas com "2 ligados" têm **a mesma chance** (0,081). Só muda *qual*
-   servidor caiu. Então dá para juntar: chance de ter exatamente 2 ligados = **3 × 0,081 = 0,243**.
-2. Esse **3** é só a contagem de *de quantos jeitos diferentes* isso pode acontecer.
-   É exatamente isso que a notação `C(n, i)` significa: **"quantas combinações têm `i` ligados"**.
-   Nada mais que isso.
 
 A tabela de 8 linhas fica resumida em 4:
 
@@ -199,25 +190,6 @@ disponibilidade despenca para **0,8953**. Isso equivale a quase 1 dia fora do ar
 Por isso sistemas reais **não** exigem que a escrita chegue em todas as réplicas de uma
 vez de forma síncrona.
 
-<!-- ### 4. A maioria tem um comportamento curioso: um "ponto de virada" em p = 0,5
-
-Repare na coluna `p = 0,50`: a linha da maioria dá **exatamente 0,5000 para todo n ímpar**
-(n=3, 5, 7, 9 e 11, todos com 0,5000). Não é coincidência.
-
-Se cada servidor é uma moeda honesta, "ter maioria ligada" e "ter maioria caída" são
-situações igualmente prováveis. Empate perfeito, não importa quantos servidores.
-
-E aí:
-
-- se `p` for **maior** que 0,5 → colocar mais servidores empurra a disponibilidade **para 1**
-  (`n=3, p=0,7` → 0,7840, mas `n=11, p=0,7` → 0,9218)
-- se `p` for **menor** que 0,5 → colocar mais servidores empurra **para 0**
-- exatamente em `p = 0,5` → fica travado em 0,5 para sempre
-
-É por isso que, no gráfico `fig3`, as curvas vão ficando cada vez mais parecidas com um
-**degrau** conforme `n` aumenta. Com muitos servidores, ou quase sempre tem maioria, ou
-quase nunca tem. O meio-termo some. -->
-
 ### 4. Conclusão prática: separe a exigência da leitura da exigência da escrita
 
 Com `n = 5` e `p = 0,9`:
@@ -269,9 +241,6 @@ No fim:
 ```
 disponibilidade experimental = número de sucessos ÷ número de rodadas
 ```
-
-> **Por que o passo 2 funciona?** Se você sorteia um número qualquer entre 0 e 1, a
-> chance dele cair abaixo de 0,9 é... 90%. Exatamente o `p` que queríamos.
 
 O código tem duas versões, que fazem a mesma coisa:
 
